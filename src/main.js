@@ -1,18 +1,54 @@
-const { invoke } = window.__TAURI__.tauri;
+const { app, Menu } = require('@tauri-apps/api')
 
-let greetInputEl;
-let greetMsgEl;
+const menuTemplate = [
+	{
+		label: 'File',
+		submenu: [
+			{
+				label: 'Open',
+				accelerator: 'CmdOrCtrl+O',
+				click: () => {
+					// Добавьте обработчик для действия "Open"
+				},
+			},
+			{
+				label: 'Save',
+				accelerator: 'CmdOrCtrl+S',
+				click: () => {
+					// Добавьте обработчик для действия "Save"
+				},
+			},
+		],
+	},
+	{
+		label: 'Edit',
+		submenu: [
+			{
+				label: 'Cut',
+				accelerator: 'CmdOrCtrl+X',
+				click: () => {
+					// Добавьте обработчик для действия "Cut"
+				},
+			},
+			{
+				label: 'Copy',
+				accelerator: 'CmdOrCtrl+C',
+				click: () => {
+					// Добавьте обработчик для действия "Copy"
+				},
+			},
+			{
+				label: 'Paste',
+				accelerator: 'CmdOrCtrl+V',
+				click: () => {
+					// Добавьте обработчик для действия "Paste"
+				},
+			},
+		],
+	},
+]
 
-async function greet() {
-  // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-  greetMsgEl.textContent = await invoke("greet", { name: greetInputEl.value });
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-  greetInputEl = document.querySelector("#greet-input");
-  greetMsgEl = document.querySelector("#greet-msg");
-  document.querySelector("#greet-form").addEventListener("submit", (e) => {
-    e.preventDefault();
-    greet();
-  });
-});
+app.on('tauri://create-menu', () => {
+	const myMenu = Menu.buildFromTemplate(menuTemplate)
+	Menu.setApplicationMenu(myMenu)
+})
