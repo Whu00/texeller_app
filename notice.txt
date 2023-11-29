@@ -1,0 +1,5 @@
+Texeller
+Copyright 2023 Ivan Shekunov
+
+This product includes software developed by
+Ivan Shekunov (aka Whu00) (http://whu00.github.io/).
