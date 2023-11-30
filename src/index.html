@@ -5,32 +5,66 @@
 		<link rel="stylesheet" href="styles.css" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Tauri App</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap"
+			rel="stylesheet"
+		/>
 	</head>
 
 	<body>
+		<!--new file window-->
+		<div id="newFileWindow" class="newFileWindow hiddenFileWindow"></div>
+		<!--tabs menu-->
+		<div class="tabsContent">
+			<button data-tab="tab-1" class="tabsButton">Стартовый скин</button>
+			<button data-tab="tab-2" class="tabsButton">Вкладка</button>
+		</div>
+		<!--tabs content-->
+		<div class="tabsWapper">
+			<div id="tab-1" class="tabContent hiddenTabContent">content</div>
+			<div id="tab-2" class="tabContent hiddenTabContent">content 2</div>
+		</div>
+		<!--tool panel-->
 		<div class="toolPanel">
-			<button class="cursor">
+			<button class="tool-button">
 				<img src="./assets/cursor-tool.svg" alt="" class="tool-icon" />
 			</button>
-			<button>
+			<button class="tool-button">
 				<img src="./assets/magic-wand.svg" alt="" class="tool-icon" />
 			</button>
-			<button>
+			<button class="tool-button">
 				<img src="./assets/select-tool.svg" alt="" class="tool-icon" />
 			</button>
-			<button>
+			<button class="tool-button">
 				<img src="./assets/pencil-tool.svg" alt="" class="tool-icon" />
 			</button>
-			<button>
+			<button class="tool-button">
 				<img src="./assets/eraser-tool.svg" alt="" class="tool-icon" />
 			</button>
-			<button>
+			<button class="tool-button">
 				<img src="./assets/picker-tool.svg" alt="" class="tool-icon" />
 			</button>
-			<button>
+			<button class="tool-button">
 				<img src="./assets/fill-tool.svg" alt="" class="tool-icon" />
 			</button>
 		</div>
-		<script type="module" src="/main.js" defer></script>
+		<!--explorer panel-->
+		<div class="explorer">
+			<button class="tool-button">
+				<img src="./assets/file-tool.svg" alt="" class="tool-icon" />
+			</button>
+			<button class="tool-button">
+				<img src="./assets/smallfile-tool.svg" alt="" class="tool-icon" />
+			</button>
+			<button class="tool-button">
+				<img src="./assets/manyfiles-tool.svg" alt="" class="tool-icon" />
+			</button>
+		</div>
+		<!--scripts-->
+		<script type="module" src="./three/three.min.js" defer></script>
+		<script type="module" src="./tabs.js" defer></script>
+		<script type="module" src="./three/threescripts.js" defer></script>
 	</body>
 </html>

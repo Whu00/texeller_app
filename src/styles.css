@@ -101,6 +101,11 @@ section {
 	display: block;
 }
 body {
+	overflow: hidden;
+	position: fixed;
+	-webkit-user-select: none; /* Safari */
+	-ms-user-select: none; /* IE 10 and IE 11 */
+	user-select: none; /* Standard syntax */
 	line-height: 1;
 	background: #242423;
 }
@@ -126,33 +131,67 @@ table {
 button {
 	width: 40px;
 	height: 40px;
-	margin-left: auto;
-	margin-right: auto;
 	margin-top: 5%;
 	border: none;
 	background: none;
 }
-button:hover {
+.tool-button:hover {
 	background: #32322f;
+	transition: 0.1s;
 }
-button:focus {
+.tool-button:focus {
 	border-left: solid 4px;
 	border-left-color: #dddd37;
 	background: #32322f;
 }
 .toolPanel {
 	background: #1f1f1d;
-	height: 100vh;
+	height: 72.5vh;
 	width: 40px;
 }
-.cursor {
-	margin-top: 40px;
-}
+
 .tool-icon {
 	height: 20px;
 }
-.prevent-select {
-	-webkit-user-select: none; /* Safari */
-	-ms-user-select: none; /* IE 10 and IE 11 */
-	user-select: none; /* Standard syntax */
+.explorer {
+	background: #1f1f1d;
+	height: 27.5vh;
+	width: 40px;
+}
+.tabsContent {
+	padding-left: 40px;
+	background: #1f1f1d;
+	height: 40px;
+	width: 100%;
+}
+.tabsButton {
+	padding-top: auto;
+	padding-left: 20px;
+	padding-right: 20px;
+	width: auto;
+	height: 40px;
+	margin-top: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	color: #ffffff;
+	font-family: 'Ubuntu', sans-serif;
+}
+.tabsButton:hover {
+	background: #242423;
+	transition: 0.1s;
+}
+.hiddenTabContent,
+.hiddenFileWindow {
+	display: none;
+}
+.activeTab {
+	border-top: solid 4px;
+	border-top-color: #dddd37;
+	background: #242423;
+}
+.newFileWindow {
+	background: red;
+	position: absolute;
+	height: 200px;
+	width: 400px;
 }
