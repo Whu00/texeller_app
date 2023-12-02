@@ -7,16 +7,25 @@ fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
 }
 
-use tauri::{CustomMenuItem, Menu, MenuItem, Submenu, Manager};
+use tauri::{CustomMenuItem, Menu, MenuItem, Submenu, Manager, Invoke, Window, command, generate_handler};
 
+#[derive(Clone, serde::Serialize)]
+
+struct Payload {
+  message: String,
+}
 fn main() {
+    #[tauri::command]
+    fn my_custom_command(message: String) -> String {
+      "Response from Rust".to_string()
+    }
     // here `"quit".to_string()` defines the menu item id,
     // and the second parameter is the menu item label.
     // file
-    let new_file = CustomMenuItem::new("newFile".to_string(), "New file"); // new file 
-    let open_file = CustomMenuItem::new("openFile".to_string(), "Open file"); // open file 
+    let new_file = CustomMenuItem::new("new_file".to_string(), "New file"); // new file 
+    let open_file = CustomMenuItem::new("open_file".to_string(), "Open file"); // open file 
     let save = CustomMenuItem::new("save".to_string(), "Save"); // save 
-    let save_as = CustomMenuItem::new("saveAs".to_string(), "Save as"); // save as 
+    let save_as = CustomMenuItem::new("save_as".to_string(), "Save as"); // save as 
     let export = CustomMenuItem::new("export".to_string(), "Export"); // export
     let quit = CustomMenuItem::new("quit".to_string(), "Quit"); // exit
     // edit
@@ -26,7 +35,7 @@ fn main() {
     let copy = CustomMenuItem::new("copy".to_string(), "Copy"); // copy
     let paste = CustomMenuItem::new("paste".to_string(), "Paste"); // paste
     let delete = CustomMenuItem::new("delete".to_string(), "Delete"); // delete 
-    let select_all = CustomMenuItem::new("selectAll".to_string(), "Select all"); // select all 
+    let select_all = CustomMenuItem::new("select_all".to_string(), "Select all"); // select all 
     let settings = CustomMenuItem::new("settings".to_string(), "Settings"); // settings 
     // image 
     let resize = CustomMenuItem::new("resize".to_string(), "Resize"); // resize 
@@ -34,11 +43,11 @@ fn main() {
     let flip = CustomMenuItem::new("flip".to_string(), "Flip"); // flip
     // view 
     let zoom = CustomMenuItem::new("zoom".to_string(), "Zoom"); // zoom 
-    let zoom_out = CustomMenuItem::new("zoomOut".to_string(), "Zoom out"); // zoom out 
+    let zoom_out = CustomMenuItem::new("zoom_out".to_string(), "Zoom out"); // zoom out 
     // layers
-    let new_layer = CustomMenuItem::new("newLayer".to_string(), "New layer"); // new layer 
-    let delete_layer = CustomMenuItem::new("deleteLayer".to_string(), "Delete layer"); // delete layer 
-    let unite_layers = CustomMenuItem::new("uniteLayers".to_string(), "Unite layers"); // unite layers 
+    let new_layer = CustomMenuItem::new("new_layer".to_string(), "New layer"); // new layer 
+    let delete_layer = CustomMenuItem::new("deleteL_lyer".to_string(), "Delete layer"); // delete layer 
+    let unite_layers = CustomMenuItem::new("unite_layers".to_string(), "Unite layers"); // unite layers 
     // help 
     let help = CustomMenuItem::new("help".to_string(), "Help"); // help 
     let about = CustomMenuItem::new("about".to_string(), "About"); // about 
@@ -57,23 +66,18 @@ fn main() {
     .add_submenu(help);
 
     tauri::Builder::default()
+      .invoke_handler(tauri::generate_handler![greet])
         .menu(menu)
         .on_menu_event(|event| {
       match event.menu_item_id() {
         "quit" => {
           std::process::exit(0);
         }
+        "new_file" => {
+          event.window().emit("my_custom_command", "my_custom_command")
+        }
         _ => {}
       }
-    })
-        .setup(|app| {
-      let main_window = app.get_window("main").unwrap();
-      let menu_handle = main_window.menu_handle();
-      std::thread::spawn(move || {
-        // you can also `set_selected`, `set_enabled` and `set_native_image` (macOS only).
-        menu_handle.get_item("item_id").set_title("New title");
-      });
-      Ok(())
     })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
